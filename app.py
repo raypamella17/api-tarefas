@@ -10,6 +10,7 @@ Endpoints:
 import hmac
 import os
 import sqlite3
+from contextlib import closing
 
 from flask import Flask, g, jsonify, request
 
@@ -45,7 +46,7 @@ def close_db(_exc):
 
 
 def init_db():
-    with sqlite3.connect(DATABASE) as db:
+    with closing(sqlite3.connect(DATABASE)) as db:
         db.execute(
             """
             CREATE TABLE IF NOT EXISTS tarefas (
